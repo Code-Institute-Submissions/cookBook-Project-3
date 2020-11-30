@@ -1,0 +1,27 @@
+{% extends "layout.html"%}
+{% block title %}Recipe list{% endblock %}
+
+{% block heading %} Recipie List {% endblock %}
+{% block content %}
+
+<form>
+    <div class ="row mt-3">
+        <div class = "col-md-12">
+            <table class = "table table-sm" id="recepieTable">
+                <thead>
+                    <tr>
+                        <th scope="col" width ="10">#</th>
+                        <th scope="col" width ="30">Title</th>
+                        <th scope="col" width ="20">Cuisine</th>
+                        <th scope="col" width ="20">Course</th>
+                        <th scope="col" width ="30">Required Tools</th>
+                        <th scope="col" width ="10">Created at</th>
+                        <th scope="col" width ="10">Actions</th>
+                    </tr>
+                </thead>
+    </div>
+
+
+</form>
+
+{% endblock %}
