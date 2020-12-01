@@ -1,8 +1,6 @@
 import os 
 from flask import Flask, render_template
-
 import pymongo
-
 
 if os.path.exists("env.py"):
     import env
@@ -26,23 +24,23 @@ conn = mongo_connect(MONGO_URI)
 coll = conn[DATABASE][COLLECTION]
 
 
-DOCUMENTS = coll.find()
-
-for doc in DOCUMENTS:
-    print(doc)
+recipes = coll.objects
+print(recipes)
+#for doc in Recepies:
+ #   print(doc)
 
 
 app = Flask(__name__)
 
+
+''' List of recipes'''
 @app.route("/")
 def index():
     return render_template("index.html")
 
 
 
-
 if __name__ =="__main__":
-    app.run(
-        host= os.environ.get("IP","0.0.0.0"),
-        port= int(os.environ.get("PORT","5000")),
+    app.run(host=os.environ.get("IP"),
+        port=int(os.environ.get("PORT")),
         debug=True)
