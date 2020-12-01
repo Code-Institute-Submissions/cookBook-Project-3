@@ -6,6 +6,8 @@
 
 {% block content %}
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
 <form action = "/" method ="post">
     <div class="row">
         <div class = "col-md-3 padding-div">
@@ -28,7 +30,7 @@
 <form>
     <div class ="row mt-3">
         <div class = "col-md-12">
-            <table class = "table table-sm" id="recepieTable">
+            <table class = "table table-sm" id="recipeTable">
                 <thead>
                     <tr>
                         <th scope="col" width ="10">#</th>
@@ -41,20 +43,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                   
+                    {% for recipe in recipes %}
                     <tr>
-                        <th scope="row"></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                         <th scope="row">{{ loop.index }}</th>
+                         <td>{{recipe.dish}}</td>
+                         <td>{{recipe.cuisine}}</td>
+                         <td>{{recipe.course}}</td>
+                         <td>{{recipe.required_tool}}</td>
+                         <td>{{recipe.created_at}}</td>
                         <td>
                             <a href= "/view" target ="_blank"><button class ="btn btn-sm btn-info"><i class = "far fa-eye"></i></button></a>
                             <a href= "/view" target ="_blank"><button class ="btn btn-sm btn-warning"><i class = "far fa-edit"></i></button></a>
                             <button class = "btn btn-sm btn-danger" onclick=""><i class="far fa-trash-alt"></i></button>
-
+                        </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>    
         </div>    
@@ -63,4 +66,14 @@
 
 </form>
 
+{% endblock %}
+
+{% block script %}
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+<script>
+$(document).ready( function () {
+    $('#recipeTable').DataTable({ "searching": false});
+} );
+
+</script>
 {% endblock %}
