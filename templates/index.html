@@ -8,20 +8,16 @@
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 
-<form action = "/" method ="post">
+<form action = "{{ url_for('search')}}" method ="post">
     <div class="row">
-        <div class = "col-md-3 padding-div">
-            <input type ="text" class = "form-control search-control" id="name" name ="name"  value ="{{name}}"  placeholder="Search by name..">    
+        <div class = "col-md-7 padding-div mt-2 ">
+            <input type ="text" class = "form-control search-control" id="querySearch" name ="querySearch"  value ="{{name}}"  placeholder="Search dishes by name, cuisine or course.." minlength="3">    
         </div>
-        <div class = "col-md-3 padding-div">
-            <input type ="text" class = "form-control search-control" id="cuisine" name ="cuisine"  value = "{{cuisine}}"  placeholder="Search by cuisine..">    
-        </div>
-        <div class = "col-md-3 padding-div">
-            <input type ="text" class = "form-control search-control" id="course" name ="course"  value = "{{course}}"  placeholder="Search by course">    
-        </div>
-        <div class = "col-md-3 padding-div text-center">
-            <button type="submit" class ="btn btn-primary ml-3 mb-2"><i class = "fas fa-search mr-1"></i>Search</button>
-            <a href = "/add" target="_blank"><button type = "button" class = "btn btn-success ml-3 mb-2"><i class ="fas fa-plus-circle mr-1"></i>New</button></a>
+        
+        <div class = "col-md-5 padding-div text-center">
+            <button type="submit" class ="btn btn-primary mb-2 mt-2 mb-2"><i class = "fas fa-search mr-1"></i>Search</button>
+            <a href = "/add" target="_blank"><button type = "button" class = "btn btn-success ml-3 mt-2 mb-2"><i class ="fas fa-plus-circle mr-1"></i>New</button></a>
+            <a href ="/" class = "btn  ml-3 mb-2 mt-2 btn-warning"><i class ="fas fa-sync-alt mr-1"></i>Reset</a>
         </div>
     </div>
 </form>
@@ -43,8 +39,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                
                     {% for recipe in recipes %}
-                    <tr>
+                     <tr>
                          <th scope="row">{{ loop.index }}</th>
                          <td>{{recipe.dish}}</td>
                          <td>{{recipe.cuisine}}</td>
@@ -53,12 +50,12 @@
                          <td>{{recipe.created_at}}</td>
                         <td>
                             <a href= "/view" target ="_blank"><button class ="btn btn-sm btn-info"><i class = "far fa-eye"></i></button></a>
-                            <a href= "/view" target ="_blank"><button class ="btn btn-sm btn-warning"><i class = "far fa-edit"></i></button></a>
+                            <a href= "/update" target ="_blank"><button class ="btn btn-sm btn-warning"><i class = "far fa-edit"></i></button></a>
                             <button class = "btn btn-sm btn-danger" onclick=""><i class="far fa-trash-alt"></i></button>
                         </td>
                     </tr>
                     {% endfor %}
-                </tbody>
+                 </tbody>
             </table>    
         </div>    
     </div>

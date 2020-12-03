@@ -24,12 +24,39 @@ mongo = PyMongo(app)
 
 ''' List of recipes'''
 @app.route("/")
-@app.route("/recipe")
 def recipe():
     recipes = mongo.db.Recipe.find()
     print(recipes)
     return render_template("index.html", recipes=recipes)
 
+
+@app.route("/search", methods=["GET","POST"])
+def search():
+        query = request.form.get("querySearch")
+        recipes = mongo.db.Recipe.find({"$text":{"$search":query}})
+        return render_template("index.html", recipes=recipes)
+   
+
+@app.route("/add", methods=["GET","POST"])
+def add():
+    if request.method == "POST":
+        #Adding a new recipe variables
+        recipe = {
+            "dish": request.form.get("dishName"),
+            "cuisine": request.form.get("cuisine"),
+            "course": request.form.get("course"),
+            "required_tool": request.form.get("required_tools"),
+            "ingredients": request.form.get("ingredients"),
+            "instructions": request.form.get("instructions"),
+            "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+         #Adding a new recipe to db
+        mongo.db.Recipe.insert_one(recipe)
+        flash("New recipe added")
+        return redirect(url_for("recipe"))
+        flash("New recipe added")
+    else:
+        #go to add page
+        return render_template("add.html")
 
 
 if __name__ =="__main__":
