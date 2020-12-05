@@ -1,9 +1,61 @@
-{% extends "layout.html"}
-{% block title %}Recipe detail{% endblock %}
+{% extends "layout.html" %}
+{% block title %}View Recipe{% endblock %}
+{% block heading %}View Recipe{% endblock %}
 
-{% block heading %}Recipe detail% endblock %}
 {% block content %}
+<form action ="{{url_for('view',recipe_id = recipe._id)}}" method="POST">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="dishName">Dish Name</label>
+                <input type="text" class = "form-control" id="dishName" name = "dishName" aria-describedby="dishNameHelp" value ="{{recipe.dish}}" required>
+                <small id="dishNameHelp" class = "form-text text-muted">Ex: Spicy Spare Ribs.</small>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="cuisine">Cuisine</label>
+                <input type="text" class = "form-control" id="cuisine" name = "cuisine" aria-describedby="cuisineHelp" value ="{{recipe.cuisine}}" required>
+                <small id="" class = "form-text text-muted">Ex: Fusion cuisine, Haute cuisine.</small>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="course">Course</label>
+                <input type="text" class = "form-control" id="course" name = "course" aria-describedby="courseHelp" value ="{{recipe.course}}" required>
+                <small id="courseHelp" class = "form-text text-muted">Ex: Main Dish, Pork.</small>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="required_tools">Required Tools</label>
+                <input type="text" class = "form-control" id="required_tools" name = "required_tools" aria-describedby="required_toolsHelp" value ="{{recipe.required_tool}}" required>
+                <small id="required_toolsHelp" class = "form-text text-muted">Ex: oven, pressure cooker.</small>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="ingredients">Ingredients</label>
+                <textarea type="text" class = "form-control" id="ingredients" name = "ingredients" aria-describedby="ingredientsHelp" required>{{recipe.ingredients}}</textarea>
+                <small id="ingredientsHelp" class = "form-text text-muted">Ex: 2	Pork Spare Ribs, 1/2 tsp	Salt</small>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="instructions">Instructions</label>
+                <textarea type="text" class = "form-control" id="instructions" name = "instructions" aria-describedby="instructionsHelp" required>{{recipe.instructions}}</textarea>
+                <small id="instructionsHelp" class = "form-text text-muted">Write instructions for this recipe</small>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-12 text-center">
+            <a href ="{{ url_for('recipe') }}"class= "btn btn-warning"><i class = " fas fa-times-circle right"></i> Cancel
+            </a>
+            <a href= "{{ url_for('update',recipe_id=recipe._id) }}" target ="_blank" class = "btn btn-primary"><i class = "far fa-edit"></i>Update
+            </a>
+        </div>
+
+</form>
 
 
-
-{% end block%}
+{% endblock %}

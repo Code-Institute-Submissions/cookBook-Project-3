@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
     <title>{% block title %}{% endblock %}</title>
 
     <!--Boostrap core CSS -->
@@ -14,15 +15,74 @@
                integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" 
                crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+    <!-- Favicons -->
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      td, th{
+        text-align: center;
+      }
+      .search-control{
+          display: block;
+          width: 100%;
+          height: calc(1.5em + 0.75rem + 2px);
+          padding: 0.375rem 0.75rem;
+          font-size: 1rem;
+          font-weight: 400;
+          line-height: 1.5;
+          background-clip: padding-box;
+          transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+          background: #ffffff !important;
+          color: #000000 !important;
+          border: 2px solid #000000;
+      }
+      .pading-div{
+          padding: 2px!important;
+      }
+      #mainContainer {
+          padding-top:1%;
+      }
+
+    </style>
 </head>
 <body class="bg-light">
-     <div class="container">
+    <section >
+        <!-- flash messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert" style= "position: absolute; z-index:9999; width:100%">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="font-weight-light text-center"><stong>{{ message }}</strong></h4>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </section>
+     <div class="container" id="mainContainer">
+     
         <div class="py-5 text-center">
             <a href="/">
                 <img class ="d-block mx-auto mb-4" src ="{{ url_for('static',filename ='logo.png')}}" width="72" height="72">
             </a>
             <h2>{% block heading %}{% endblock %}</h2>
         </div>
+        
 
     {% block content %}{% endblock %}
         
@@ -31,6 +91,7 @@
         </footer>
         
       </div>
+        
         <script
         src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -40,7 +101,13 @@
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
         crossorigin="anonymous"></script>
-
-        {% block script %}{% endblock %}
+        <script>
+          window.setTimeout(function() {
+              $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                  $(this).remove(); 
+              });
+          }, 2000);
+         </script>
+    {% block script %} {% endblock %}
 </body>
 </html>

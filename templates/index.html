@@ -7,6 +7,7 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <form action = "{{ url_for('search')}}" method ="post">
     <div class="row">
@@ -16,7 +17,7 @@
         
         <div class = "col-md-5 padding-div text-center">
             <button type="submit" class ="btn btn-primary mb-2 mt-2 mb-2"><i class = "fas fa-search mr-1"></i>Search</button>
-            <a href = "/add" target="_blank"><button type = "button" class = "btn btn-success ml-3 mt-2 mb-2"><i class ="fas fa-plus-circle mr-1"></i>New</button></a>
+            <a href = "/add"><button type = "button" class = "btn btn-success ml-3 mt-2 mb-2"><i class ="fas fa-plus-circle mr-1"></i>New</button></a>
             <a href ="/" class = "btn  ml-3 mb-2 mt-2 btn-warning"><i class ="fas fa-sync-alt mr-1"></i>Reset</a>
         </div>
     </div>
@@ -49,11 +50,11 @@
                          <td>{{recipe.required_tool}}</td>
                          <td>{{recipe.created_at}}</td>
                         <td>
-                            <a href= "/view" target ="_blank"><button class ="btn btn-sm btn-info"><i class = "far fa-eye"></i></button></a>
-                            <a href= "/update" target ="_blank"><button class ="btn btn-sm btn-warning"><i class = "far fa-edit"></i></button></a>
-                            <button class = "btn btn-sm btn-danger" onclick=""><i class="far fa-trash-alt"></i></button>
+                            <a href= "{{ url_for('view',recipe_id=recipe._id) }}"  class = "btn btn-sm btn-info"><i class = "far fa-eye"></i></a>
+                            <a href= "{{ url_for('update',recipe_id=recipe._id) }}"  class = "btn btn-sm btn-warning"><i class = "far fa-edit"></i></a>
+                            <a href = "{{ url_for('remove',recipe_id=recipe._id) }}" type="submit" class = "btn btn-sm btn-danger delete" onclick="removeRecipeAlert(event, '{{recipe._id}}')" ><i class = "far fa-trash-alt"></i></a>
                         </td>
-                    </tr>
+                     </tr>
                     {% endfor %}
                  </tbody>
             </table>    
@@ -66,11 +67,35 @@
 {% endblock %}
 
 {% block script %}
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
-<script>
-$(document).ready( function () {
-    $('#recipeTable').DataTable({ "searching": false});
-} );
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        /* Applying the jquery dataTables to the recipe table */
+        $(document).ready( function () {
+            $('#recipeTable').DataTable({ "searching": false});
+        } );
 
-</script>
+        function removeRecipeAlert(event,recipe_id){
+                event.preventDefault()
+                       swal({
+                            title: "Are you sure?",
+                            text: "Once deleted, you will not be able to recover this!",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                             if (willDelete) {
+                                $.getJSON('/remove', {
+                                    id: recipe_id,
+                                }, function(data) {
+                                location.reload(true);
+
+                                });
+                            }
+                            
+                        });
+                }
+                
+    </script>
 {% endblock %}
